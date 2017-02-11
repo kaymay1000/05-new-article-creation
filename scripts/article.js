@@ -11,7 +11,7 @@ function Article (opts) {
   this.publishedOn = opts.publishedOn;
 }
 
-Article.prototype.toHtml = function() {
+Article.prototype.toHtml = function() { //interface to Handlebars template!
   var template = Handlebars.compile($('#article-template').text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
@@ -19,7 +19,6 @@ Article.prototype.toHtml = function() {
 
   // REVIEW: We're passing the body into the marked.js library to format our markdown input!
   this.body = marked(this.body);
-
   return template(this);
 };
 
@@ -29,7 +28,7 @@ rawData.sort(function(a,b) {
 
 rawData.forEach(function(ele) {
   articles.push(new Article(ele));
-})
+});
 
 articles.forEach(function(a){
   $('#articles').append(a.toHtml())
